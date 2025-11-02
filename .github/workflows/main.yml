@@ -1,44 +1,11 @@
-name: CI/CD Pipeline
-
-on:
-  push:
-    branches: ["main"]
-  workflow_dispatch:   # allows manual trigger
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run build
-        run: npm run build || echo "No build script, skipping"
-
-      - name: Security scan with Snyk
-        uses: snyk/actions/node@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_40e6a35a-3d91-4c72-81b9-6b4d0fc0067a }}
-
-      - name: Build Docker image
-        run: docker build -t myapp:${{ github.run_number }} .
-
-      - name: Login to DockerHub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_umer86 }}
-          password: ${{ secrets.DOCKERHUB_dckr_pat_E1RtIblc1rpqQJug7DZzBf2SGIU}}
-
-      - name: Push Docker image
-        run: |
-          docker tag myapp:${{ github.run_number }} ${{ secrets.DOCKERHUB_umer86}}/myapp:${{ github.run_number }}
-          docker push ${{ secrets.DOCKERHUB_umer86 }}/myapp:${{ github.run_number }}
+{
+  "name": "nodejs-hello-world",
+  "version": "1.0.0",
+  "description": "A simple Node.js project for GitHub Actions",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
